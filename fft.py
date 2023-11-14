@@ -34,22 +34,3 @@ def fft_power(x) :
     power[N//2] = abs(x[N//2])**2
     power = power/N
     return power
-
-
-def ifft(x) :
-    from numpy import conj, divide
-
-    # conjugate the complex numbers
-    x = np.conj(x)
- 
-    # forward fft
-    X = fft( x );
- 
-    # conjugate the complex numbers again
-    X = np.conj(X)
- 
-    # scale the numbers
-    X = X / len(X)
-
-    return X
-    
