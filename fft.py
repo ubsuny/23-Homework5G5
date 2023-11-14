@@ -25,12 +25,26 @@ def fft(x):
 
 
 
-def fft_power(x) :
+def fft_power(x):
     N = len(x)
-    if N <=1 : return x
-    power = np.zeros(N//2+1)
+    if N <= 1:
+        return x
+
+    power = np.zeros(N // 2 + 1)
+    magnitude = np.zeros(N // 2 + 1)
+
     power[0] = abs(x[0])**2
-    power[1:N//2] = abs(x[1:N//2])**2 + abs(x[N-1:N//2:-1])**2
-    power[N//2] = abs(x[N//2])**2
-    power = power/N
-    return power
+    magnitude[0] = abs(x[0])
+
+    power[1:N // 2] = abs(x[1:N // 2])**2 + abs(x[N - 1:N // 2:-1])**2
+    magnitude[1:N // 2] = abs(x[1:N // 2]) + abs(x[N - 1:N // 2:-1])
+
+    if N % 2 == 0:
+        power[N // 2] = abs(x[N // 2])**2
+        magnitude[N // 2] = abs(x[N // 2])
+
+    power = power / N
+    magnitude = magnitude / N
+
+    return power, magnitude
+
