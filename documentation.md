@@ -24,7 +24,7 @@ In addition, given an even number of data points, we can divide the imput data i
 
 The Global Monitoring Laboratory (GML) is an organization that uses monitoring stations around the globe to record various sets of environmental data, including carbon dioxide (CO2) emissions. We specifically used the data from the Cape Kumukahi, Hawaii, United States monitoring station [4], along with Fourier transform methods, to measure the frequency of carbon emission cycles.
 
-## Coding the FFT
+## Coding the FFT [5]
 
 Our program contains functions to perform both the DFT and FFT for a given data set. The DFT is relatively straightforward, taking an input data array and "brute forcing" the above DFT summation
 ``` Python
