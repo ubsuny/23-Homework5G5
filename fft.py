@@ -93,7 +93,6 @@ def calculate_frequency_manual(sampling_rate, n_points):
     if n_points % 2 == 0:
         freq_values[:n_points // 2] = np.arange(0, n_points // 2) * frequency_resolution
         freq_values[n_points // 2:] = np.arange(-n_points // 2, 0) * frequency_resolution
-
     return freq_values
 
 
