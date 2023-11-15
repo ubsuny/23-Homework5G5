@@ -9,7 +9,16 @@ Where $\omega$ is the frequency. However, since computers must rely on numerical
 $$F (\omega) = \sum_{k = 0}^{N-1} f(k) e^{\omega k T}$$
 Where $T$ is our interval between sampling times.
 
-However, implementing the DFT exactly leads to long computation times for large data sets. To resolve this, we use the **Whatever method**
+However, implementing the DFT exactly leads to long computation times for large data sets. To resolve this, we use the Fast Fourier Transform method. Specifically, we use the Cooley-Tukey implementation of the DFT, which dramatically speeds up computation time. We start by rewriting our DFT as
+$$F (n) = \sum_{k = 0}^{N-1} f(k) e^{- j \frac{2 \pi}{N} n k } = \sum_{k = 0}^{N-1} f(k) W_{N}^{nk}$$
+Where
+$$W_{N}^{nk} = e^{- j \frac{2 \pi}{N} n k }$$
+Where we notice that
+$$W_8^4 = -W_8^0$$
+$$W_8^5 = -W_8^1$$
+And so on, meaning we don't have to repeat this calculation for every single value.
+
+In addition, given an even number of data points, we can divide the imput data into two parts, "even" and "odd" which are computed simultaneously. Combined with the prior principle this will exponentially decrease the computation time.
 
 ### Carbon Emissions Monitoring [https://gml.noaa.gov/]
 
