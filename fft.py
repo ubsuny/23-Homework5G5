@@ -48,3 +48,28 @@ def fft_power(x):
 
     return power, magnitude
 
+def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
+    """
+    Find peaks in the FFT power spectrum using the gradient method.
+
+    Parameters:
+    - freq_values: Array of frequency values corresponding to each FFT bin.
+    - power_spectrum: Power spectrum obtained from the FFT.
+    - threshold: Threshold for peak detection (default is 0.5).
+
+    Returns:
+    - peak_freqs: Array of frequencies corresponding to detected peaks.
+    """
+    # Compute the gradient of the power spectrum
+    gradient = np.gradient(power_spectrum)
+
+    # Find indices where the gradient changes sign from positive to negative
+    peak_indices = np.where((gradient[:-1] > 0) & (gradient[1:] < 0))[0] + 1
+
+    # Filter peaks based on threshold
+    peak_indices = peak_indices[power_spectrum[peak_indices] > threshold]
+
+    # Extract corresponding frequencies
+    peak_freqs = freq_values[peak_indices]
+
+    return peak_freqs
