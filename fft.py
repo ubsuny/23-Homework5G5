@@ -48,6 +48,32 @@ def fft_power(x):
 
     return power, magnitude
 
+def calculate_frequency_manual(sampling_rate, n_points):
+    """
+    Calculate the actual frequency values for FFT bins manually.
+
+    Parameters:
+    - sampling_rate: The sampling rate of the signal.
+    - n_points: The number of points in the FFT.
+
+    Returns:
+    - freq_values: Array of frequency values corresponding to each FFT bin.
+    """
+    # Calculate the frequency resolution
+    frequency_resolution = sampling_rate / n_points
+
+    # Calculate frequency values for each bin
+    freq_values = np.arange(0, n_points) * frequency_resolution
+
+    # Handle Nyquist frequency for even n_points
+    if n_points % 2 == 0:
+        freq_values[:n_points // 2] = np.arange(0, n_points // 2) * frequency_resolution
+        freq_values[n_points // 2:] = np.arange(-n_points // 2, 0) * frequency_resolution
+
+    return freq_values
+
+
+
 def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
     """
     Find peaks in the FFT power spectrum using the gradient method.
