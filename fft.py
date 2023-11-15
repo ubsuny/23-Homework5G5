@@ -95,8 +95,6 @@ def calculate_frequency_manual(sampling_rate, n_points):
         freq_values[n_points // 2:] = np.arange(-n_points // 2, 0) * frequency_resolution
     return freq_values
 
-
-
 def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
     """
     Find peaks in the FFT power spectrum using the gradient method.
@@ -120,5 +118,4 @@ def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, thresho
 
     # Extract corresponding frequencies
     peak_freqs = freq_values[peak_indices]
-
     return peak_freqs
