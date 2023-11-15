@@ -53,7 +53,7 @@ def fft_power(x):
     """
     N = len(x)
     if N <= 1:
-        return x
+    return x
 
     power = np.zeros(N // 2 + 1)
     magnitude = np.zeros(N // 2 + 1)
