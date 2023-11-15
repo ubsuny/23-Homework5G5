@@ -3,10 +3,10 @@ from cmath import exp, pi
 from math import sin, cos
 import numpy as np
 
-from fourier import discrete_transform, fft, fft_power
+from fft.py import discrete_transform, fft, fft_power
+
 
 class FourierTest(unittest.TestCase):
-
     def test_discrete_transform(self):
         # Test with a simple sine wave
         data = np.array([sin(2 * pi * x) for x in range(10)])
@@ -39,10 +39,11 @@ class FourierTest(unittest.TestCase):
         # Test with a simple sine wave
         data = np.array([sin(2 * pi * x) for x in range(10)])
         power, magnitude = fft_power(data)
-        expected_power = np.abs(np.fft.fft(data))**2
+        expected_power = np.abs(np.fft.fft(data)) ** 2
         expected_magnitude = np.abs(np.fft.fft(data))
         self.assertTrue(np.allclose(power, expected_power))
         self.assertTrue(np.allclose(magnitude, expected_magnitude))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
