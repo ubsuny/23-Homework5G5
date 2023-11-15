@@ -40,8 +40,6 @@ def fft(x):
     return np.array( [even[k] + exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] + \
                      [even[k] - exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] )
 
-
-
 def fft_power(x):
     """
     Compute the power and magnitude spectra of the FFT result.
@@ -55,7 +53,7 @@ def fft_power(x):
     """
     N = len(x)
     if N <= 1:
-        return x
+    return x
 
     power = np.zeros(N // 2 + 1)
     magnitude = np.zeros(N // 2 + 1)
@@ -72,7 +70,6 @@ def fft_power(x):
 
     power = power / N
     magnitude = magnitude / N
-
     return power, magnitude
 
 def calculate_frequency_manual(sampling_rate, n_points):
@@ -96,10 +93,7 @@ def calculate_frequency_manual(sampling_rate, n_points):
     if n_points % 2 == 0:
         freq_values[:n_points // 2] = np.arange(0, n_points // 2) * frequency_resolution
         freq_values[n_points // 2:] = np.arange(-n_points // 2, 0) * frequency_resolution
-
     return freq_values
-
-
 
 def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
     """
@@ -124,5 +118,4 @@ def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, thresho
 
     # Extract corresponding frequencies
     peak_freqs = freq_values[peak_indices]
-
     return peak_freqs
