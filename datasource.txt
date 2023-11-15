@@ -1,0 +1,3 @@
+CO2 data is obtained from the Cape Kumukahi, Hawaii, United States (KUM) station, from the following link:
+
+https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/txt/co2_kum_surface-flask_1_ccgg_month.txt
