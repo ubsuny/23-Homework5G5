@@ -10,3 +10,10 @@ $$F (\omega) = \sum_{k = 0}^{N-1} f(k) e^{\omega k T}$$
 Where $T$ is our interval between sampling times.
 
 However, implementing the DFT exactly leads to long computation times for large data sets. To resolve this, we use the **Whatever method**
+
+### Carbon Emissions Monitoring [https://gml.noaa.gov/]
+
+The Global Monitoring Laboratory (GML) is an organization that uses monitoring stations around the globe to record various sets of environmental data, including carbon dioxide (CO2) emissions. We specifically used the data from the Cape Kumukahi, Hawaii, United States monitoring station, along with Fourier transform methods, to measure the frequency of carbon emission cycles. The data used is available here: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/txt/co2_kum_surface-flask_1_ccgg_month.txt.
+
+## Coding the FFT
+
