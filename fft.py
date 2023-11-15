@@ -161,6 +161,6 @@ frequencies, indices = find_fft_peaks_derivative_with_gradient(
 
 print(
     "The peak with the largest magnitude in the FFT spectrum is: "
-    + str(indices[1])
+    + str(indices[np.argmax(frequencies)])
     + " oscillations per month."
 )
