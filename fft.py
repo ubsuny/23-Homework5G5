@@ -3,7 +3,15 @@ from math import sin, cos
 import numpy as np
 
 def discrete_transform(data):
-    """Return Discrete Fourier Transform (DFT) of a complex data vector"""
+    """
+    Return the Discrete Fourier Transform (DFT) of a complex data vector.
+
+    Parameters:
+    - data (array-like): Input complex data vector.
+
+    Returns:
+    - transform (array): DFT of the input data vector.
+    """
     N = len(data)
     transform = np.zeros(N)
     for k in range(N):
