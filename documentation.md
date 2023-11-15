@@ -26,3 +26,33 @@ The Global Monitoring Laboratory (GML) is an organization that uses monitoring s
 
 ## Coding the FFT
 
+Our program contains functions to perform both the DFT and FFT for a given data set. The DFT is relatively straightforward, taking an input data array and "brute forcing" the above DFT summation
+``` Python
+def discrete_transform(data):
+    N = len(data)
+    transform = np.zeros(N)
+    for k in range(N):
+        for j in range(N):
+            angle = 2 * pi * k * j / N
+            transform[k] += data[j] * exp(1j * angle)
+    return transform
+```
+
+For the FFT, the process is slightly more complex. First, we check to ensure that we have an even number of data points, and that we actually have more than one data point at all, which are both required to use our algorithm explained above. If we do not, we simply perform the discrete transform as usual.
+``` Python
+if N <= 1: return x
+    elif N % 2 == 1:         # N is odd, lemma does not apply
+        print ('N is ' + str(N) + ', fall back to discrete transform')
+        return discrete_transform(x)
+```
+
+For an even number of data points, we then split the data into two parts and perform the calculation above
+``` Python
+even = fft(x[0::2])
+    odd =  fft(x[1::2])
+    return np.array( [even[k] + exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] + \
+                     [even[k] - exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] )
+```
+Which will give the DFT in less time.
+
+## Calculating Power Spectrum
