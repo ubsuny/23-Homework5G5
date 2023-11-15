@@ -21,6 +21,15 @@ def discrete_transform(data):
     return transform
 
 def fft(x):
+    """
+    Perform the Fast Fourier Transform (FFT) on the input vector.
+
+    Parameters:
+    - x (array-like): Input data vector.
+
+    Returns:
+    - fft_result (array): Result of the FFT.
+    """
     N = len(x)
     if N <= 1: return x
     elif N % 2 == 1:         # N is odd, lemma does not apply
