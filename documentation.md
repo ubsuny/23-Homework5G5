@@ -101,6 +101,38 @@ def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, thresho
     return peak_freqs
 ```
 
+We then import our climate data using pandas (as shown in the hands on), and convert the timescale to months so that we have a useful length scale. We also chop our data to a length of 512 to enable faster FFT
+
+```Python
+df = pd.read_csv("climatedata.csv")
+
+df["date"] = pd.to_datetime(df[["year", "month"]].assign(day=1)).dt.to_period("M")
+
+df = df.set_index("date")
+
+df["months"] = [x.n for x in (df.index - df.index[0])]
+
+X = fft(df["value"][-512:])
+```
+We then find the magnitudes and positions of our maximum frequencies and print out our dominant frequency.
+```Python
+power_spectrum, magnitude_spectrum = fft_power(X)
+
+# Calculate the frequency values for each FFT bin
+frequencies, indices = find_fft_peaks_derivative_with_gradient(
+    X, power_spectrum, threshold=0.5
+)
+
+print(
+    "The peak with the largest magnitude in the FFT spectrum is: "
+    + str(indices[np.argmax(frequencies)])
+    + " oscillations per month."
+)
+```
+We note that given our data, this will print a result of
+![image](https://github.com/WildJimmy/23-Homework5G5-James/assets/94491866/f7731379-d76c-41c2-a655-f9d6e9391508)
+Which reflects that our data has not been cleaned. This is ultimately the job of task 2, which we did not have in our group, so our frequency spectrum is dominated by the high-frequency noise present in the data
+
 ## <ins>References:</ins>
 1. [Discrete Fourier Transforms](https://www.robots.ox.ac.uk/~sjrob/Teaching/SP/l7.pdf)
 2. [Cooley-Tukey Method (Lecture Notes)](https://cdn.discordapp.com/attachments/1145841446180630628/1169348831746474096/2023-410-11-fft.pdf?ex=655e4e76&is=654bd976&hm=a2547cbdee88128abd43e6b1e884a13fe8eec49716d273097d57e7581ba3d3b6&)

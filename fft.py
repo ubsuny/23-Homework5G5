@@ -1,6 +1,9 @@
 from cmath import exp, pi
 from math import sin, cos
 import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+
 
 def discrete_transform(data):
     """
@@ -17,8 +20,9 @@ def discrete_transform(data):
     for k in range(N):
         for j in range(N):
             angle = 2 * pi * k * j / N
-            transform[k] += data[j] * exp(1j * angle)
+            transform[k] += data[j] * exp(j * angle)
     return transform
+
 
 def fft(x):
     """
@@ -31,15 +35,17 @@ def fft(x):
     - fft_result (array): Result of the FFT.
     """
     N = len(x)
-    if N <= 1: return x
-    elif N % 2 == 1:         # N is odd, lemma does not apply
-        print ('N is ' + str(N) + ', fall back to discrete transform')
+    if N <= 1:
+        return x
+    elif N % 2 == 1:  # N is odd, lemma does not apply
+        print("N is " + str(N) + ", fall back to discrete transform")
         return discrete_transform(x)
     even = fft(x[0::2])
-    odd =  fft(x[1::2])
-    return np.array( [even[k] + exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] + \
-                     [even[k] - exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] )
-
+    odd = fft(x[1::2])
+    return np.array(
+        [even[k] + exp(-2j * pi * k / N) * odd[k] for k in range(N // 2)]
+        + [even[k] - exp(-2j * pi * k / N) * odd[k] for k in range(N // 2)]
+    )
 
 
 def fft_power(x):
@@ -60,20 +66,21 @@ def fft_power(x):
     power = np.zeros(N // 2 + 1)
     magnitude = np.zeros(N // 2 + 1)
 
-    power[0] = abs(x[0])**2
+    power[0] = abs(x[0]) ** 2
     magnitude[0] = abs(x[0])
 
-    power[1:N // 2] = abs(x[1:N // 2])**2 + abs(x[N - 1:N // 2:-1])**2
-    magnitude[1:N // 2] = abs(x[1:N // 2]) + abs(x[N - 1:N // 2:-1])
+    power[1 : N // 2] = abs(x[1 : N // 2]) ** 2 + abs(x[N - 1 : N // 2 : -1]) ** 2
+    magnitude[1 : N // 2] = abs(x[1 : N // 2]) + abs(x[N - 1 : N // 2 : -1])
 
     if N % 2 == 0:
-        power[N // 2] = abs(x[N // 2])**2
+        power[N // 2] = abs(x[N // 2]) ** 2
         magnitude[N // 2] = abs(x[N // 2])
 
     power = power / N
     magnitude = magnitude / N
 
     return power, magnitude
+
 
 def calculate_frequency_manual(sampling_rate, n_points):
     """
@@ -94,11 +101,14 @@ def calculate_frequency_manual(sampling_rate, n_points):
 
     # Handle Nyquist frequency for even n_points
     if n_points % 2 == 0:
-        freq_values[:n_points // 2] = np.arange(0, n_points // 2) * frequency_resolution
-        freq_values[n_points // 2:] = np.arange(-n_points // 2, 0) * frequency_resolution
+        freq_values[: n_points // 2] = (
+            np.arange(0, n_points // 2) * frequency_resolution
+        )
+        freq_values[n_points // 2 :] = (
+            np.arange(-n_points // 2, 0) * frequency_resolution
+        )
 
     return freq_values
-
 
 
 def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
@@ -125,4 +135,32 @@ def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, thresho
     # Extract corresponding frequencies
     peak_freqs = freq_values[peak_indices]
 
-    return peak_freqs
+    return peak_freqs, peak_indices
+
+
+# Read the CSV file into a DataFrame
+df = pd.read_csv("climatedata.csv")
+
+df["date"] = pd.to_datetime(df[["year", "month"]].assign(day=1)).dt.to_period("M")
+
+df = df.set_index("date")
+
+
+df["months"] = [x.n for x in (df.index - df.index[0])]
+
+
+X = fft(df["value"][-512:])
+
+# Calculate the power and magnitude spectra
+power_spectrum, magnitude_spectrum = fft_power(X)
+
+# Calculate the frequency values for each FFT bin
+frequencies, indices = find_fft_peaks_derivative_with_gradient(
+    X, power_spectrum, threshold=0.5
+)
+
+print(
+    "The peak with the largest magnitude in the FFT spectrum is: "
+    + str(indices[np.argmax(frequencies)])
+    + " oscillations per month."
+)
