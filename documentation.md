@@ -138,3 +138,4 @@ Which reflects that our data has not been cleaned. This is ultimately the job of
 2. [Cooley-Tukey Method (Lecture Notes)](https://cdn.discordapp.com/attachments/1145841446180630628/1169348831746474096/2023-410-11-fft.pdf?ex=655e4e76&is=654bd976&hm=a2547cbdee88128abd43e6b1e884a13fe8eec49716d273097d57e7581ba3d3b6&)
 3. [Global Monitoring Laboratory](https://gml.noaa.gov/)
 4. [Cape Kumukahi, Hawaii, United States GML Data](https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/txt/co2_kum_surface-flask_1_ccgg_month.txt.)
+5. S. Rappoccio, “Data Analysis/FFT” GitHub, 2022. [https://github.com/ubsuny/CompPhys/tree/main/DataAnalysis/FFT](https://github.com/ubsuny/CompPhys/tree/main/DataAnalysis/FFT) (accessed Nov. 15, 2023).
