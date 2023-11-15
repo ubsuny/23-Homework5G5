@@ -40,8 +40,6 @@ def fft(x):
     return np.array( [even[k] + exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] + \
                      [even[k] - exp(-2j*pi*k/N)*odd[k] for k in range(N//2)] )
 
-
-
 def fft_power(x):
     """
     Compute the power and magnitude spectra of the FFT result.
