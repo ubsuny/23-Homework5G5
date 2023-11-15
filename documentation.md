@@ -55,4 +55,48 @@ even = fft(x[0::2])
 ```
 Which will give the DFT in less time.
 
-## Calculating Power Spectrum
+## Calculating Frequency of Data
+
+To find the dominant frequencies of the data, we find the maxima of our frequency spectrum calculated via FFT by first finding the power spectrum of our FFT
+``` Python
+def fft_power(x):
+    N = len(x)
+    if N <= 1:
+        return x
+
+    power = np.zeros(N // 2 + 1)
+    magnitude = np.zeros(N // 2 + 1)
+
+    power[0] = abs(x[0])**2
+    magnitude[0] = abs(x[0])
+
+    power[1:N // 2] = abs(x[1:N // 2])**2 + abs(x[N - 1:N // 2:-1])**2
+    magnitude[1:N // 2] = abs(x[1:N // 2]) + abs(x[N - 1:N // 2:-1])
+
+    if N % 2 == 0:
+        power[N // 2] = abs(x[N // 2])**2
+        magnitude[N // 2] = abs(x[N // 2])
+
+    power = power / N
+    magnitude = magnitude / N
+
+    return power, magnitude
+```
+And then checking the maxima of this result using the zeros of the gradient, giving our peak frequencies of the data
+``` Python
+
+def find_fft_peaks_derivative_with_gradient(freq_values, power_spectrum, threshold=0.5):
+    # Compute the gradient of the power spectrum
+    gradient = np.gradient(power_spectrum)
+
+    # Find indices where the gradient changes sign from positive to negative
+    peak_indices = np.where((gradient[:-1] > 0) & (gradient[1:] < 0))[0] + 1
+
+    # Filter peaks based on threshold
+    peak_indices = peak_indices[power_spectrum[peak_indices] > threshold]
+
+    # Extract corresponding frequencies
+    peak_freqs = freq_values[peak_indices]
+
+    return peak_freqs
+```
