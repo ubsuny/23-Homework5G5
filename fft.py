@@ -70,7 +70,6 @@ def fft_power(x):
 
     power = power / N
     magnitude = magnitude / N
-
     return power, magnitude
 
 def calculate_frequency_manual(sampling_rate, n_points):
