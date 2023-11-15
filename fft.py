@@ -43,6 +43,16 @@ def fft(x):
 
 
 def fft_power(x):
+    """
+    Compute the power and magnitude spectra of the FFT result.
+
+    Parameters:
+    - x (array-like): Result of the FFT.
+
+    Returns:
+    - power (array): Power spectrum of the input.
+    - magnitude (array): Magnitude spectrum of the input.
+    """
     N = len(x)
     if N <= 1:
         return x
