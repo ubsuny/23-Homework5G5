@@ -3,7 +3,7 @@ from cmath import exp, pi
 from math import sin, cos
 import numpy as np
 
-from fft.py import discrete_transform, fft, fft_power
+from fft import discrete_transform, fft, fft_power
 
 @pytest.mark.parametrize("input_data, expected_transform", [
     (np.array([sin(2 * pi * x) for x in range(10)]), np.fft.fft(np.array([sin(2 * pi * x) for x in range(10)]))),
