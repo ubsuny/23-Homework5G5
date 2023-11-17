@@ -3,5 +3,3 @@ numpy
 pandas
 pylint
 matplotlib
-math
-cmath
